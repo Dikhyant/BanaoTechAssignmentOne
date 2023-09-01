@@ -1,18 +1,23 @@
 import {
     Animated,
-    GestureResponderEvent,
-    PanResponderGestureState,
     View,
     StyleSheet
 } from "react-native";
+
 import {
     FC, useState
 } from "react";
+
+import {
+    useSelector,
+} from "react-redux";
+
 import SwipableCard from "./SwipableCard";
 import Card from "../widgets/Card";
 import SecondCard from "./SecondCard";
 import ThirdCard from "./ThirdCard";
 import FourthCard from "./FourthCard";
+import { RootState } from "../../redux/rootReducer";
 
 const styles = StyleSheet.create({
     cardStack: {
@@ -26,59 +31,38 @@ const styles = StyleSheet.create({
 })
 
 const CardStack:FC = () => {
-    const [cardInfoList, setCardInfoList] = useState([
-        {
-            id: 1
-        },
-        {
-            id: 2
-        },
-        {
-            id: 3
-        },
-        {
-            id: 4
-        },
-        {
-            id: 5
-        },
-        {
-            id: 6
-        }
-    ]);
+    const cardInfoList = useSelector((store: RootState) => {
+        return store.reducer.storeItems
+    })
 
     const swipeNormalized = useState(new Animated.Value(0))[0];
 
-    const OnPanResponderMove = (e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
-        // console.log(gestureState.dx);
-    }
-
-    const cards = cardInfoList.map((item, index) => {
+    const cards = cardInfoList?.map((item, index) => {
         if(index == 0) {
             return (
-                <SwipableCard key={item.id} OnPanResponderMove={OnPanResponderMove} swipeNormalized={swipeNormalized}>
-                    <Card />
+                <SwipableCard id={item.id} key={item.id} swipeNormalized={swipeNormalized}>
+                    <Card id={item.id} />
                 </SwipableCard>
             )
         }
         if(index == 1) {
             return (
                 <SecondCard key={item.id} swipeNormalized={swipeNormalized}>
-                    <Card />
+                    <Card id={item.id} />
                 </SecondCard>
             )
         }
         if(index == 2) {
             return (
                 <ThirdCard key={item.id} swipeNormalized={swipeNormalized}>
-                    <Card />
+                    <Card id={item.id} />
                 </ThirdCard>
             )
         }
         if(index == 3) {
             return (
                 <FourthCard key={item.id}>
-                    <Card />
+                    <Card id={item.id} />
                 </FourthCard>
             )
         }

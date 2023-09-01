@@ -1,8 +1,8 @@
 import {
     Animated,
-    View,
     StyleSheet,
-    PanResponder
+    PanResponder,
+    useWindowDimensions
 } from "react-native";
 import {
     FC
@@ -13,24 +13,24 @@ type Props = {
     swipeNormalized: Animated.Value
 }
 
-const initialTranslateY: number = 45;
-const finalTranslateY: number = 0;
 
-const initialScaleValue: number = 0.8;
-const finalScaleValue: number = 0.9;
 
 const styles = StyleSheet.create({
     secondCard: {
         position: "absolute",
         width: "100%",
         height: "auto",
-        transform: [
-            {translateY: initialTranslateY},
-        ]
     }
 })
 
 const SecondCard:FC<Props> = ({children, swipeNormalized}) => {
+    const {height} = useWindowDimensions();
+
+    const initialTranslateY: number = height * 0.06;
+    const finalTranslateY: number = 0;
+
+    const initialScaleValue: number = 0.8;
+    const finalScaleValue: number = 0.9;
     
     const panResponder = PanResponder.create({
         onMoveShouldSetPanResponder: () => true,

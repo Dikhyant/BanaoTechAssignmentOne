@@ -1,9 +1,7 @@
 import {
     Animated,
-    View,
     StyleSheet,
-    AnimatableNumericValue,
-    useAnimatedValue
+    useWindowDimensions
 } from "react-native";
 import {
     FC
@@ -14,24 +12,22 @@ type Props = {
     swipeNormalized: Animated.Value
 }
 
-const initialTranslateY: number = 85;
-const finalTranslateY: number = 40;
-
-const initialScaleValue: number = 0.7;
-const finalScaleValue: number = 0.8;
-
 const styles = StyleSheet.create({
     thirdCard: {
         position: "absolute",
         width: "100%",
         height: "auto",
-        transform: [
-            {translateY: initialTranslateY},
-        ]
     }
 })
 
 const ThirdCard:FC<Props> = ({children, swipeNormalized}) => {
+    const {height} = useWindowDimensions();
+
+    const initialTranslateY: number = height * 0.12;
+    const finalTranslateY: number = height * 0.06;
+
+    const initialScaleValue: number = 0.7;
+    const finalScaleValue: number = 0.8;
     return (
         <Animated.View 
         style={[

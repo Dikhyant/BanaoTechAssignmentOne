@@ -1,13 +1,17 @@
 import { 
     View,
-    Image,
     StyleSheet,
     useWindowDimensions
  } from "react-native";
 
- const crossMark = require('../../assets/images/cross-mark.png');
- const greenTick = require('../../assets/images/green-tick.png');
+ import {
+    FC
+ } from "react";
 
+ import {
+    useSelector
+ } from "react-redux";
+import { RootState } from "../../redux/rootReducer";
 
  const styles = StyleSheet.create({
     card: {
@@ -36,12 +40,18 @@ import {
     }
  })
 
-export default function Card() {
+ type Props = {
+    id: string
+ }
+
+const Card:FC<Props> = ({id}) => {
     const {width} = useWindowDimensions();
+    const state = useSelector((state: RootState) => state.reducer);
+    const backgroundColor:string = state.storeItems.find(item => item.id === id).backgroundColor;
     return (
         <View style={{
             ...styles.card,
-            backgroundColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1 )`
+            backgroundColor: backgroundColor
             // width: width * 0.7
         }}>
             {/* <View style={styles.iconContainer}>
@@ -51,3 +61,5 @@ export default function Card() {
         </View>
     )
 }
+
+export default Card;

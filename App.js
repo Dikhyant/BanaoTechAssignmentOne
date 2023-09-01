@@ -1,15 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Card from './src/components/widgets/Card';
-import SwipableCard from './src/components/containers/SwipableCard';
 import CardStack from './src/components/containers/CardStack';
+import { Provider } from 'react-redux';
+import store from "./src/redux/store";
+import StoreInitializer from './src/__test__/storeInitializer';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <CardStack />
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <StoreInitializer />
+      <View style={styles.container}>
+        <CardStack />
+        <StatusBar style="auto" />
+      </View>
+    </Provider>
   );
 }
 

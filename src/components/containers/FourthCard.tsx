@@ -1,6 +1,7 @@
 import {
     View,
-    StyleSheet
+    StyleSheet,
+    useWindowDimensions
 } from "react-native";
 import {
     FC
@@ -19,13 +20,14 @@ const styles = StyleSheet.create({
 })
 
 const FourthCard:FC<Props> = ({children}) => {
+    const {height} = useWindowDimensions();
     return (
         <View 
         style={[
             styles.fourthCard, 
             {
                 transform: [
-                    {translateY: 85},
+                    {translateY: height * 0.12},
                     {scale: 0.7}
                 ]
             }
